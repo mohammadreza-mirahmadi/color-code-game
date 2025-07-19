@@ -37,7 +37,17 @@ function timer(start, tag) {
   }, 1000);
 }
 
-function userGuessRender(userGuess, currectGuess, displacedColors) {}
+function userGuessRender(userGuess, currectGuess, displacedColors) {
+  userGuess.forEach((color) => {
+    const colorCircle = document.createElement("div");
+    colorCircle.id = "colorCircle";
+    colorCircle.className = "";
+    colorCircle.style.width = "1rem";
+    colorCircle.style.height = "1rem";
+    colorCircle.style.borderRadius = "50%";
+    colorCircle.style.backgroundColor = color;
+  });
+}
 
 // ======== The firs section ========
 
@@ -108,3 +118,5 @@ timer("0:13", timeLeftSpan);
 const colors = ["purple", "blue", "green", "yellow", "orange", "red"];
 const currect = 1;
 const displaced = 2;
+
+userGuessRender(colors, currect, displaced);
