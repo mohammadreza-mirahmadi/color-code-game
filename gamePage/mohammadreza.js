@@ -105,3 +105,6 @@ container.append(firstSection);
 container.append(yourGuessSection);
 
 timer("0:13", timeLeftSpan);
+const colors = ["purple", "blue", "green", "yellow", "orange", "red"];
+const currect = 1;
+const displaced = 2;
