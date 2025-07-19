@@ -84,6 +84,7 @@ async function handleSignUp(e) {
       window.location.href = "#";
     }, 2000);
     Ptag.insertAdjacentElement("beforeend", divAlert);
+    // =========================================================
   } catch (error) {
     signUpBtn.disabled = false;
     console.error("Error during sign up", error);
@@ -114,7 +115,7 @@ function clearError() {
 // ===================handle icon============
 eye_icons.forEach((icon) => {
   icon.addEventListener("click", () => {
-    const input = icon.previousElementSibling;
+    const input = icon.parentElement.querySelector("input");
     const type =
       input.getAttribute("type") === "password" ? "text" : "password";
     input.setAttribute("type", type);
