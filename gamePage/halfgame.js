@@ -16,7 +16,7 @@ secondSectionDiv0.className = "d-flex gap-1 mb-3";
 const secondSectionDiv1 = document.createElement("div");
 secondSectionDiv1.id = "second-Section_div1";
 secondSectionDiv1.className = "d-flex gap-2 ";
-// align-items-center
+
 const secondSectionDiv2 = document.createElement("div");
 secondSectionDiv2.id = "second-section-div2";
 secondSectionDiv2.className = "d-flex gap-2 pt-2";
@@ -30,17 +30,19 @@ secondSectionbutton.id = "second-section-button";
 secondSectionbutton.textContent = "submit guess";
 secondSectionbutton.className = "btn btn-success btn-sm";
 
+let correctPosition = 0;
+let correctColor = 0;
 let levelColor = 0;
 let colors = [];
 let colorsmake = 6;
 
 function guess(para) {
-  let gu = [];
+  let guss = [];
   for (const i of para) {
     let index = Math.floor(Math.random() * para.length);
-    gu.push(para[index]);
+    guss.push(para[index]);
   }
-  return gu;
+  return guss;
 }
 
 if (levelColor === 0) {
@@ -104,56 +106,54 @@ colors.forEach((para) => {
   secondSectionDiv0.append(circlebColors);
 });
 
-let correctPosition = 0;
-let correctColor = 0;
-
-console.log(userguess);
+// هنگام کلیک بر روی دکمه "submit guess"
 secondSectionbutton.addEventListener("click", () => {
+  // بررسی اینکه آیا تعداد رنگ‌های انتخاب شده درست است یا نه
   if (secondSectionDiv2.children.length < colorsmake) {
-    alert(`please select ${colorsmake} colors `);
+    alert(`please select ${colorsmake} colors`);
     return;
   }
+
+  // بازنشانی مقادیر برای هر حدس جدید
+  correctPosition = 0;
+  correctColor = 0;
+
   // ایجاد یک کپی برای عدم تغییر متغیر اصلی
   let gussCopy = [...guss];
   let userCopy = [...userguess];
-  // چک دایره های کاملا درست
+
+  // چک دایره‌های کاملا درست (در جای درست)
   for (let i = 0; i < colorsmake; i++) {
     if (userCopy[i] === gussCopy[i]) {
       correctPosition++;
-
-      gussCopy[i] = null;
-      userCopy[i] = null;
+      gussCopy[i] = null; // حذف رنگ درست از کپی
+      userCopy[i] = null; // حذف رنگ درست از حدس کاربر
     }
   }
-  // چک دایره هایی با رنگ درست ولی در جای اشتباه
-  // for (let i = 0; i < colorsmake; i++) {
-  //   if (userCopy[i] !== null) {
-  //     let index = gussCopy.indexOf(userCopy[i]);
-  //     if (index !== -1) {
-  //       correctColor++;
-  //       gussCopy.splice(index, 1, null);
-  //     }
-  //   }
-  // }
 
+  // چک دایره‌هایی که رنگ درست دارند اما در موقعیت اشتباه هستند
   for (let i = 0; i < userCopy.length; i++) {
     for (let j = 0; j < gussCopy.length; j++) {
-      if (gussCopy[j] === gussCopy[i] && gussCopy[j] !== null) {
+      if (
+        userCopy[i] !== null &&
+        gussCopy[j] !== null &&
+        userCopy[i] === gussCopy[j]
+      ) {
         correctColor++;
-        gussCopy.splice(j, 1, null);
-        // break;
+        gussCopy[j] = null; // رنگ پیدا شده از کپی حذف می‌شود
+        userCopy[i] = null; // رنگ پیدا شده از حدس کاربر حذف می‌شود
+        break; // پس از یافتن یک رنگ درست در موقعیت اشتباه باید حلقه متوقف شود
       }
     }
   }
 
   console.log(
-    ` ${correctPosition} color(s) in correct position\n ${correctColor} correct color(s) but in wrong position`
+    `${correctPosition} color(s) in correct position\n${correctColor} correct color(s) but in wrong position`
   );
 
+  // پس از هر حدس، لیست حدس‌های کاربر و رنگ‌های انتخابی باید پاک شوند
   secondSectionDiv2.innerHTML = "";
   userguess = [];
-  console.log(gussCopy);
-  console.log(userCopy);
 });
 
 container.append(secondSection);
