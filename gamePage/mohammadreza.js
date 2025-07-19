@@ -46,6 +46,7 @@ function userGuessRender(userGuess, currectGuess, displacedColors) {
     colorCircle.style.height = "1rem";
     colorCircle.style.borderRadius = "50%";
     colorCircle.style.backgroundColor = color;
+    userGuessParent.append(colorCircle);
   });
 }
 
