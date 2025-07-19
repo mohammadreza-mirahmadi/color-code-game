@@ -30,8 +30,8 @@ secondSectionbutton.id = "second-section-button";
 secondSectionbutton.textContent = "submit guess";
 secondSectionbutton.className = "btn btn-success btn-sm";
 
-let correctPosition = 0;
 let correctColor = 0;
+let correctPosition = 0;
 let levelColor = 0;
 let colors = [];
 let colorsmake = 6;
