@@ -37,21 +37,25 @@ function timer(start, tag) {
   }, 1000);
 }
 
-// ======== creating the elements ========
+function userGuessRender(userGuess, currectGuess, displacedColors) {}
+
+// ======== The firs section ========
 
 const firstSection = document.createElement("section");
 firstSection.id = "first-section";
 
-const title = document.createElement("h1");
-title.id = "title";
-title.textContent = "Color Code Game";
-title.className = "text-center h3 mb-3";
+const mainTitle = document.createElement("h1");
+mainTitle.id = "title";
+mainTitle.textContent = "Color Code Game";
+mainTitle.className = "text-center h3 mb-3";
+firstSection.append(mainTitle);
 
 const nav = document.createElement("div");
 nav.id = "nav";
 nav.style.backgroundColor = "#f0f0f0";
 nav.className =
   "rounded border border-2 py-2 px-3 d-flex justify-content-between";
+firstSection.append(nav);
 
 const remainingGue = document.createElement("p");
 remainingGue.id = "remainingGue";
@@ -62,6 +66,7 @@ const remainingGueSpan = document.createElement("span");
 remainingGueSpan.id = "remainingGueSpan";
 remainingGueSpan.className = "fw-normal";
 remainingGueSpan.textContent = "10";
+remainingGue.append(remainingGueSpan);
 
 const timeLeft = document.createElement("p");
 timeLeft.id = "timeLeft";
@@ -72,19 +77,31 @@ const timeLeftSpan = document.createElement("span");
 timeLeftSpan.id = "timeLeftSpan";
 timeLeftSpan.className = "fw-normal";
 timeLeftSpan.textContent = "5:00";
-
-// ======== appending the elements ========
-
 timeLeft.append(timeLeftSpan);
-remainingGue.append(remainingGueSpan);
 
 nav.append(remainingGue, timeLeft);
 
-firstSection.append(title);
+// ======== The third section ========
+const yourGuessSection = document.createElement("section");
+yourGuessSection.id = "yourGuessSection";
 
-container.append(firstSection, nav);
+const yourGuessTitle = document.createElement("h2");
+yourGuessTitle.id = "yourGuessTitle";
+yourGuessTitle.className = "text-center h3 fs-5 mt-2";
+yourGuessTitle.textContent = "Your Guesses";
 
-// document.addEventListener("DOMContentLoaded", () => {
-//   timer("0:13", timeLeftSpan);
-// });
+const yourGuessList = document.createElement("ul");
+yourGuessList.id = "yourGuessList";
+yourGuessList.className = "p-2 mt-3 rounded border border-2";
+yourGuessList.style.backgroundColor = "#f0f0f0";
+
+const userGuessParent = document.createElement("div");
+userGuessParent.id = "userGuessParent";
+userGuessParent.className = "";
+yourGuessSection.append(yourGuessTitle);
+yourGuessSection.append(yourGuessList);
+
+container.append(firstSection);
+container.append(yourGuessSection);
+
 timer("0:13", timeLeftSpan);
