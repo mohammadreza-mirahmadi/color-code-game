@@ -1,0 +1,309 @@
+const container = document.querySelector("#container");
+
+// ======== definding the functions ========
+let stop = null;
+function timer(start, tag) {
+  if (stop) {
+    return;
+  }
+  let nextTime = "";
+  let sec1 = Number(start[3]);
+  let sec2 = Number(start[2]);
+  let min = Number(start[0]);
+
+  if (sec1 === 0) {
+    sec1 = 9;
+    if (sec2 === 0) {
+      sec2 = 5;
+      if (min === 0) {
+        return;
+      } else {
+        min -= 1;
+      }
+    } else {
+      sec2 -= 1;
+    }
+  } else {
+    sec1 -= 1;
+  }
+
+  if (min === 0 && sec2 === 1 && sec1 === 0) {
+    tag.style.color = "red";
+  }
+
+  nextTime = `${min}:${sec2}${sec1}`;
+
+  tag.textContent = nextTime;
+
+  setTimeout(() => {
+    timer(nextTime, tag);
+  }, 1000);
+}
+
+function userGuessRender(userGuess, currectColors, misplacedColors) {
+  const yourGuessListItem = document.createElement("li");
+  yourGuessListItem.className =
+    "d-flex justify-content-between border-top border-2 pt-3";
+  yourGuessListItem.style.marginTop = "-1.5px";
+  yourGuessList.insertAdjacentElement("afterbegin", yourGuessListItem);
+
+  const userGuessParent = document.createElement("div");
+  userGuessParent.id = "userGuessParent";
+  userGuessParent.className = "d-flex gap-3";
+  yourGuessList.append(userGuessParent);
+
+  userGuess.forEach((color) => {
+    const colorCircle = document.createElement("div");
+    colorCircle.id = "colorCircle";
+    colorCircle.className = "";
+    colorCircle.style.width = "1.5rem";
+    colorCircle.style.height = "1.5rem";
+    colorCircle.style.borderRadius = "50%";
+    colorCircle.style.backgroundColor = color;
+    userGuessParent.append(colorCircle);
+  });
+  yourGuessListItem.append(userGuessParent);
+
+  const resultGuess = document.createElement("div");
+  resultGuess.className = "";
+  yourGuessListItem.append(resultGuess);
+
+  const resultGuessText = document.createElement("p");
+  resultGuessText.className = "";
+  resultGuessText.textContent = `Currect: ${currectColors}, Misplaced: ${misplacedColors}`;
+  resultGuess.append(resultGuessText);
+}
+
+// ======== The firs section ========
+
+const firstSection = document.createElement("section");
+firstSection.id = "first-section";
+
+const mainTitle = document.createElement("h1");
+mainTitle.id = "title";
+mainTitle.textContent = "Color Code Game";
+mainTitle.className = "text-center h3 mb-3";
+firstSection.append(mainTitle);
+
+const nav = document.createElement("div");
+nav.id = "nav";
+nav.style.backgroundColor = "#f0f0f0";
+nav.className =
+  "rounded border border-2 py-2 px-3 d-flex justify-content-between";
+firstSection.append(nav);
+
+const remainingGue = document.createElement("p");
+remainingGue.id = "remainingGue";
+remainingGue.className = "m-0 fw-bold";
+remainingGue.textContent = "Remaining Guesses: ";
+
+const remainingGueSpan = document.createElement("span");
+remainingGueSpan.id = "remainingGueSpan";
+remainingGueSpan.className = "fw-normal";
+remainingGueSpan.textContent = "۱۰";
+remainingGue.append(remainingGueSpan);
+
+const timeLeft = document.createElement("p");
+timeLeft.id = "timeLeft";
+timeLeft.className = "m-0 fw-bold";
+timeLeft.textContent = "Time Left: ";
+
+const timeLeftSpan = document.createElement("span");
+timeLeftSpan.id = "timeLeftSpan";
+timeLeftSpan.className = "fw-normal";
+timeLeftSpan.textContent = "5:00";
+timeLeft.append(timeLeftSpan);
+
+nav.append(remainingGue, timeLeft);
+container.append(firstSection);
+
+// ======== The second section ========
+const secondSection = document.createElement("section");
+secondSection.id = "second-section";
+secondSection.className = "mt-3";
+
+const secondSectionH2 = document.createElement("h2");
+secondSectionH2.id = "second-section-h2";
+secondSectionH2.className = "text-center h3 fs-5";
+secondSectionH2.textContent = "Select colors";
+
+const secondSectionDiv0 = document.createElement("div");
+secondSectionDiv0.id = "second-secion-div0";
+secondSectionDiv0.className = "d-flex gap-1 mb-3";
+
+const secondSectionDiv1 = document.createElement("div");
+secondSectionDiv1.id = "second-Section_div1";
+secondSectionDiv1.className = "d-flex gap-2 ";
+
+const secondSectionDiv2 = document.createElement("div");
+secondSectionDiv2.id = "second-section-div2";
+secondSectionDiv2.className = "d-flex gap-2 pt-2";
+
+const secondsectionp = document.createElement("p");
+secondsectionp.id = "second-section-p";
+secondsectionp.textContent = "your current guess:";
+
+const secondSectionbutton = document.createElement("button");
+secondSectionbutton.id = "second-section-button";
+secondSectionbutton.textContent = "submit guess";
+secondSectionbutton.className = "btn btn-success btn-sm";
+
+let correctColor = 0;
+let correctPosition = 0;
+let levelColor = 0;
+let colors = [];
+let colorsmake = 6;
+
+function guess(para) {
+  let guss = [];
+  for (const i of para) {
+    let index = Math.floor(Math.random() * para.length);
+    guss.push(para[index]);
+  }
+  return guss;
+}
+
+if (levelColor === 0) {
+  colors = ["red", "green", "blue", "yellow", "purple", "orange"];
+  colorsmake = 6;
+} else if (levelColor === 1) {
+  colors = [
+    "red",
+    "green",
+    "blue",
+    "yellow",
+    "purple",
+    "orange",
+    "lightgreen",
+    "black",
+  ];
+  colorsmake = 8;
+} else if (levelColor === 2) {
+  colors = [
+    "red",
+    "green",
+    "blue",
+    "yellow",
+    "purple",
+    "orange",
+    "lightgreen",
+    "black",
+    "pink",
+    "brown",
+  ];
+  colorsmake = 10;
+}
+let guss = guess(colors);
+let userguess = [];
+colors.forEach((para) => {
+  // دایره های اصلی برای حدس کاربر
+  const circlebColors = document.createElement("div");
+  circlebColors.id = para;
+  circlebColors.className = "rounded-circle";
+  circlebColors.style.width = "30px";
+  circlebColors.style.height = "30px";
+  circlebColors.style.background = para;
+  //  حدس کد توسط کاربر
+  circlebColors.addEventListener("click", () => {
+    if (secondSectionDiv2.children.length === colorsmake) {
+      return;
+    }
+    const circleColors = document.createElement("div");
+    circleColors.className = "rounded-circle";
+    circleColors.style.width = "15px";
+    circleColors.style.height = "15px";
+    circleColors.style.background = para;
+    circleColors.addEventListener("click", (e) => {
+      e.target.remove();
+    });
+    secondSectionDiv2.append(circleColors);
+    userguess.push(para);
+  });
+  secondSectionDiv0.append(circlebColors);
+});
+
+// هنگام کلیک بر روی دکمه "submit guess"
+secondSectionbutton.addEventListener("click", (e) => {
+  // بررسی اینکه آیا تعداد رنگ‌های انتخاب شده درست است یا نه
+  if (secondSectionDiv2.children.length < colorsmake) {
+    alert(`please select ${colorsmake} colors`);
+    return;
+  }
+
+  // بازنشانی مقادیر برای هر حدس جدید
+  correctPosition = 0;
+  correctColor = 0;
+
+  // ایجاد یک کپی برای عدم تغییر متغیر اصلی
+  let gussCopy = [...guss];
+  let userCopy = [...userguess];
+
+  // چک دایره‌های کاملا درست (در جای درست)
+  for (let i = 0; i < colorsmake; i++) {
+    if (userCopy[i] === gussCopy[i]) {
+      correctPosition++;
+      gussCopy[i] = null; // حذف رنگ درست از کپی
+      userCopy[i] = null; // حذف رنگ درست از حدس کاربر
+    }
+  }
+
+  // چک دایره‌هایی که رنگ درست دارند اما در موقعیت اشتباه هستند
+  for (let i = 0; i < userCopy.length; i++) {
+    for (let j = 0; j < gussCopy.length; j++) {
+      if (
+        userCopy[i] !== null &&
+        gussCopy[j] !== null &&
+        userCopy[i] === gussCopy[j]
+      ) {
+        correctColor++;
+        gussCopy[j] = null; // رنگ پیدا شده از کپی حذف می‌شود
+        userCopy[i] = null; // رنگ پیدا شده از حدس کاربر حذف می‌شود
+        break; // پس از یافتن یک رنگ درست در موقعیت اشتباه باید حلقه متوقف شود
+      }
+    }
+  }
+  // هندل کردن برد و باخت
+  remainingGueSpan.textContent = Number(remainingGueSpan.textContent) - 1;
+  if (remainingGueSpan.textContent === "0") {
+    stop = "stop";
+    e.currentTarget.disabled = "true";
+    // circlebColors.removeEventListener(); // باید برای فانکشن این ایونت از ریگولار فانکشن استفاده کرد
+    return;
+  }
+  userGuessRender(userguess, correctPosition, correctColor);
+  if (userguess === guss) {
+  }
+
+  // پس از هر حدس، لیست حدس‌های کاربر و رنگ‌های انتخابی باید پاک شوند
+  secondSectionDiv2.innerHTML = "";
+  userguess = [];
+});
+
+container.append(secondSection);
+secondSection.append(secondSectionH2);
+secondSection.append(secondSectionDiv0);
+secondSectionDiv1.append(secondsectionp);
+secondSection.append(secondSectionDiv1);
+secondSection.append(secondSectionbutton);
+secondSectionDiv1.append(secondSectionDiv2);
+
+// ======== The third section ========
+const yourGuessSection = document.createElement("section");
+yourGuessSection.id = "yourGuessSection";
+
+const yourGuessTitle = document.createElement("h2");
+yourGuessTitle.id = "yourGuessTitle";
+yourGuessTitle.className = "text-center h3 fs-5 mt-3";
+yourGuessTitle.textContent = "Your Guesses";
+yourGuessSection.append(yourGuessTitle);
+
+const yourGuessList = document.createElement("ul");
+yourGuessList.id = "yourGuessList";
+yourGuessList.className = "px-3 pb-3 mt-3 rounded border border-2";
+yourGuessList.style.listStyle = "none";
+yourGuessList.style.backgroundColor = "#f0f0f0";
+yourGuessSection.append(yourGuessList);
+
+container.append(yourGuessSection);
+
+timer("5:00", timeLeftSpan);
