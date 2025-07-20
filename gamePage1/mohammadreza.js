@@ -37,7 +37,39 @@ function timer(start, tag) {
   }, 1000);
 }
 
-function userGuessRender(userGuess, currectGuess, displacedColors) {}
+function userGuessRender(userGuess, currectColors, misplacedColors) {
+  const yourGuessListItem = document.createElement("li");
+  yourGuessListItem.className =
+    "d-flex justify-content-between border-top border-2 pt-3";
+  yourGuessListItem.style.marginTop = "-1.5px";
+  yourGuessList.insertAdjacentElement("afterbegin", yourGuessListItem);
+
+  const userGuessParent = document.createElement("div");
+  userGuessParent.id = "userGuessParent";
+  userGuessParent.className = "d-flex gap-3";
+  yourGuessList.append(userGuessParent);
+
+  userGuess.forEach((color) => {
+    const colorCircle = document.createElement("div");
+    colorCircle.id = "colorCircle";
+    colorCircle.className = "";
+    colorCircle.style.width = "1.5rem";
+    colorCircle.style.height = "1.5rem";
+    colorCircle.style.borderRadius = "50%";
+    colorCircle.style.backgroundColor = color;
+    userGuessParent.append(colorCircle);
+  });
+  yourGuessListItem.append(userGuessParent);
+
+  const resultGuess = document.createElement("div");
+  resultGuess.className = "";
+  yourGuessListItem.append(resultGuess);
+
+  const resultGuessText = document.createElement("p");
+  resultGuessText.className = "";
+  resultGuessText.textContent = `Currect: ${currectColors}, Misplaced: ${misplacedColors}`;
+  resultGuess.append(resultGuessText);
+}
 
 // ======== The firs section ========
 
@@ -89,17 +121,16 @@ const yourGuessTitle = document.createElement("h2");
 yourGuessTitle.id = "yourGuessTitle";
 yourGuessTitle.className = "text-center h3 fs-5 mt-2";
 yourGuessTitle.textContent = "Your Guesses";
+yourGuessSection.append(yourGuessTitle);
 
 const yourGuessList = document.createElement("ul");
 yourGuessList.id = "yourGuessList";
-yourGuessList.className = "p-2 mt-3 rounded border border-2";
+yourGuessList.className = "px-3 pb-3 mt-3 rounded border border-2";
+yourGuessList.style.listStyle = "none";
 yourGuessList.style.backgroundColor = "#f0f0f0";
-
-const userGuessParent = document.createElement("div");
-userGuessParent.id = "userGuessParent";
-userGuessParent.className = "";
-yourGuessSection.append(yourGuessTitle);
 yourGuessSection.append(yourGuessList);
 
 container.append(firstSection);
 container.append(yourGuessSection);
+
+timer("5:00", timeLeftSpan);
