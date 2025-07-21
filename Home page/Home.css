@@ -1,0 +1,103 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  max-width: 750px;
+  margin: 50px auto;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.greeting-box {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  text-align: left;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+.start-btn,
+.leaderboard-btn {
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.difficulty-section {
+  margin-bottom: 15px;
+}
+
+.difficulty-section h3 {
+  margin-bottom: 10px;
+}
+
+#difficulty {
+  background-color: white;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+select {
+  padding: 10px;
+  font-size: 15px;
+  margin-right: 10px;
+  width: 20rem;
+  height: 2.5rem;
+}
+
+.start-btn {
+  background-color: #007bff;
+  font-size: 15px;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 8rem;
+  height: 2.5rem;
+}
+
+.start-btn:hover {
+  background-color: #0069d9;
+}
+
+.leaderboard-section {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.leaderboard-btn {
+  background-color: #28a745;
+  color: white;
+  font-size: 15px;
+  width: 12rem;
+  height: 2.5rem;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.leaderboard-btn:hover {
+  background-color: #218838;
+}
