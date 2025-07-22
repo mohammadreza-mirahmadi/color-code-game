@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="score.css" />
+  </head>
+  <body style="background: #f0f0f0">
+    <div class="container p-3 rounded bg-light mt-3">
+      <h1 class="text text-center mt-5 mb-4">Leaderboard</h1>
+      <div id="parent"></div>
+      <!-- <table class="table table-bordered text-center container">
+        <thead class="table-info">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td></td>
+            <td>Mark</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>Jacob</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>John</td>
+          </tr>
+        </tbody>
+      </table> -->
+      <div class="mt-2 click">
+        <button type="button" class="btn btn-success btn-lg" id="renderTable">
+          Show Highest Scores
+        </button>
+        <button type="button" class="btn btn-success btn-lg">Home</button>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.10.0/axios.min.js"></script>
+    <script src="score.js"></script>
+  </body>
+</html>
