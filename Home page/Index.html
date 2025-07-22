@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Code Game</title>
+    <link rel="stylesheet" href="../Home page/Home.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Color Code Game</h1>
+
+        <div class="greeting-box">
+            Hello, <span id="username">Loading...</span> 
+            (Score: <span id="score">0</span>)
+        </div>
+
+        <div class="difficulty-section">
+            <h3>Select Difficulty Level</h3>
+            <select id="difficulty">
+                <option value="easy">Easy (6 colors)</option>
+                <option value="medium">Medium (8 colors)</option>
+                <option value="hard">Hard (10 colors)</option>
+            </select>
+            <button class="start-btn" onclick="startGame()">Start Game</button>
+        </div>
+
+        <div class="leaderboard-section">
+            <button class="leaderboard-btn" onclick="goToPage('leaderboard.html')">View Leaderboard</button>
+        </div>
+    </div>
+
+    <script src="../Home page/Home.js"></script>
+</body>
+</html>
