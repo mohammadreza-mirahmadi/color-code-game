@@ -16,6 +16,13 @@ function timer(start, tag) {
     if (sec2 === 0) {
       sec2 = 5;
       if (min === 0) {
+        // پس از هر حدس، لیست حدس‌های کاربر و رنگ‌های انتخابی باید پاک شوند
+        secondSectionDiv2.innerHTML = "";
+        userguess = [];
+        showLoss();
+        stop = "stop";
+        secondSectionbutton.disabled = "true";
+        secondSectionDiv2.style.visibility = "hidden";
         return;
       } else {
         min -= 1;
@@ -74,6 +81,20 @@ function userGuessRender(userGuess, currectColors, misplacedColors) {
   resultGuess.append(resultGuessText);
 }
 
+function showWin() {
+  const winText = document.createElement("p");
+  winText.textContent = "You won!";
+  winText.className = "text-success";
+  remainingGue.insertAdjacentElement("afterend", winText);
+}
+
+function showLoss() {
+  const lossText = document.createElement("p");
+  lossText.textContent = "You Loss!";
+  lossText.className = "text-danger";
+  remainingGue.insertAdjacentElement("afterend", lossText);
+}
+
 // ======== The firs section ========
 
 const firstSection = document.createElement("section");
@@ -100,7 +121,7 @@ remainingGue.textContent = "Remaining Guesses: ";
 const remainingGueSpan = document.createElement("span");
 remainingGueSpan.id = "remainingGueSpan";
 remainingGueSpan.className = "fw-normal";
-remainingGueSpan.textContent = "10";
+remainingGueSpan.textContent = "1";
 remainingGue.append(remainingGueSpan);
 
 const timeLeft = document.createElement("p");
@@ -205,6 +226,7 @@ colors.forEach((para) => {
   circlebColors.style.height = "30px";
   circlebColors.style.background = para;
   //  حدس کد توسط کاربر
+
   circlebColors.addEventListener("click", () => {
     if (secondSectionDiv2.children.length === colorsmake) {
       return;
@@ -225,6 +247,7 @@ colors.forEach((para) => {
     userguess.push({ id: circleId, color: para });
     circleId++;
   });
+
   secondSectionDiv0.append(circlebColors);
 });
 
@@ -276,21 +299,38 @@ secondSectionbutton.addEventListener("click", (e) => {
       }
     }
   }
-  // هندل کردن برد و باخت
+
   remainingGueSpan.textContent = Number(remainingGueSpan.textContent) - 1;
-  if (remainingGueSpan.textContent === "0") {
+  userGuessRender(userguess, correctPosition, correctColor);
+
+  // هندل کردن برد و باخت
+
+  if (userguess.length === correctPosition) {
+    showWin();
     stop = "stop";
     e.currentTarget.disabled = "true";
-    // circlebColors.removeEventListener(); // باید برای فانکشن این ایونت از ریگولار فانکشن استفاده کرد
+
+    // پس از هر حدس، لیست حدس‌های کاربر و رنگ‌های انتخابی باید پاک شوند
+    secondSectionDiv2.innerHTML = "";
+    userguess = [];
+
     return;
-  }
-  userGuessRender(userguess, correctPosition, correctColor);
-  if (userguess === guss) {
   }
 
   // پس از هر حدس، لیست حدس‌های کاربر و رنگ‌های انتخابی باید پاک شوند
   secondSectionDiv2.innerHTML = "";
   userguess = [];
+
+  if (remainingGueSpan.textContent === "0") {
+    showLoss();
+    stop = "stop";
+    e.currentTarget.disabled = "true";
+    secondSectionDiv2.style.visibility = "hidden";
+    // secondSectionDiv0.children.forEach((item) => {
+    //   item.removeEventListener("click", currentUserGuess);
+    // });
+    return;
+  }
 });
 
 container.append(secondSection);
