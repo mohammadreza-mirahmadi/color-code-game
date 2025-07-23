@@ -1,14 +1,15 @@
 let currentScore = 0;
-let username = "Guest";
+// let username ;
 let difficulty = null;
+let id = localStorage.getItem("userId")
 
-function saveUserData(name, score) {
-    localStorage.setItem("username", name);
-    localStorage.setItem("score", score);
-}
+// function saveUserData(name, score) {
+//     localStorage.setItem("username", name);
+//     localStorage.setItem("score", score);
+// }
 
 window.onload = function() {
-    fetch("https://68738976c75558e273547c3d.mockapi.io/users_info") 
+    fetch(`https://68738976c75558e273547c3d.mockapi.io/users_info/${id}`) 
         .then(response => {
             if (!response.ok) {
                 throw new Error("Network response was not ok");
@@ -16,12 +17,12 @@ window.onload = function() {
             return response.json();
         })
         .then(data => {
-            username = data.name || "Guest";
+            username = data.name;
             currentScore = parseInt(data.score) || 0;
 
-            saveUserData(username, currentScore);
+            // saveUserData(username, currentScore);
 
-            document.getElementById("username").textContent = username;
+            document.getElementById("userId").textContent = username;
             document.getElementById("score").textContent = currentScore;
 
         })
@@ -30,9 +31,9 @@ window.onload = function() {
             alert("Could not fetch user data.");
 
             
-             username = localStorage.getItem("username") || "Guest";
+             username = localStorage.getItem("userId");
             currentScore = parseInt(localStorage.getItem("score")) || 0;
-             document.getElementById("username").textContent = username;
+             document.getElementById("userId").textContent = username;
              document.getElementById("score").textContent = currentScore;
         });
 };
