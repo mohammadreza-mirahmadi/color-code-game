@@ -1,5 +1,5 @@
 const container = document.querySelector("#container");
-
+localStorage.setItem("difficulty", "hard");
 // ======== definding the functions ========
 let stop = null;
 function timer(start, tag) {
@@ -7,25 +7,29 @@ function timer(start, tag) {
     return;
   }
   let nextTime = "";
-  let sec1 = Number(start[3]);
-  let sec2 = Number(start[2]);
-  let min = Number(start[0]);
+  let sec1 = null;
+  let sec2 = null;
+  let min1 = null;
+  let min2 = null;
+  if (start.length === 5) {
+    sec1 = Number(start[4]);
+    sec2 = Number(start[3]);
+    min1 = Number(start[1]);
+    min2 = Number(start[0]);
+  } else {
+    sec1 = Number(start[4]);
+    sec2 = Number(start[3]);
+    min1 = Number(start[1]);
+    min2 = Number(start[0]);
+  }
 
   if (sec1 === 0) {
     sec1 = 9;
     if (sec2 === 0) {
       sec2 = 5;
-      if (min === 0) {
-        // پس از هر حدس، لیست حدس‌های کاربر و رنگ‌های انتخابی باید پاک شوند
-        secondSectionDiv2.innerHTML = "";
-        userguess = [];
-        showLost();
-        stop = "stop";
-        secondSectionbutton.disabled = "true";
-        secondSectionDiv2.style.visibility = "hidden";
-        return;
+      if (min1 === 0) {
       } else {
-        min -= 1;
+        min1 -= 1;
       }
     } else {
       sec2 -= 1;
@@ -34,7 +38,7 @@ function timer(start, tag) {
     sec1 -= 1;
   }
 
-  if (min === 0 && sec2 === 1 && sec1 === 0) {
+  if (min1 === 0 && sec2 === 1 && sec1 === 0) {
     tag.style.color = "red";
   }
 
@@ -153,7 +157,7 @@ timeLeft.textContent = "Time Left: ";
 const timeLeftSpan = document.createElement("span");
 timeLeftSpan.id = "timeLeftSpan";
 timeLeftSpan.className = "fw-normal";
-timeLeftSpan.textContent = "5:00";
+timeLeftSpan.textContent = "";
 timeLeft.append(timeLeftSpan);
 
 nav.append(remainingGue, timeLeft);
@@ -192,9 +196,11 @@ secondSectionbutton.className = "btn btn-success btn-sm";
 
 let correctColor = 0;
 let correctPosition = 0;
-let levelColor = 0;
+let levelColor = localStorage.getItem("difficulty");
+console.log(levelColor);
 let colors = [];
 let colorsmake = 6;
+let timeValue = null;
 
 function guess(para) {
   let guss = [];
@@ -205,10 +211,11 @@ function guess(para) {
   return guss;
 }
 
-if (levelColor === 0) {
+if (levelColor === "easy") {
   colors = ["red", "green", "blue", "yellow", "purple", "orange"];
   colorsmake = 6;
-} else if (levelColor === 1) {
+  timeValue = "5:00";
+} else if (levelColor === "medium") {
   colors = [
     "red",
     "green",
@@ -220,7 +227,8 @@ if (levelColor === 0) {
     "black",
   ];
   colorsmake = 8;
-} else if (levelColor === 2) {
+  timeValue = "10:00";
+} else if (levelColor === "hard") {
   colors = [
     "red",
     "green",
@@ -234,6 +242,7 @@ if (levelColor === 0) {
     "brown",
   ];
   colorsmake = 10;
+  timeValue = "15:00";
 }
 let guss = guess(colors);
 let userguess = [];
@@ -381,4 +390,4 @@ yourGuessSection.append(yourGuessList);
 
 container.append(yourGuessSection);
 
-timer("5:00", timeLeftSpan);
+timer(timeValue, timeLeftSpan);
