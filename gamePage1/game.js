@@ -54,12 +54,12 @@ function userGuessRender(userGuess, currectColors, misplacedColors) {
 
   userGuess.forEach((color) => {
     const colorCircle = document.createElement("div");
-    colorCircle.id = "colorCircle";
+    colorCircle.id = color.id;
     colorCircle.className = "";
     colorCircle.style.width = "1.5rem";
     colorCircle.style.height = "1.5rem";
     colorCircle.style.borderRadius = "50%";
-    colorCircle.style.backgroundColor = color;
+    colorCircle.style.backgroundColor = color.color;
     userGuessParent.append(colorCircle);
   });
   yourGuessListItem.append(userGuessParent);
@@ -100,7 +100,7 @@ remainingGue.textContent = "Remaining Guesses: ";
 const remainingGueSpan = document.createElement("span");
 remainingGueSpan.id = "remainingGueSpan";
 remainingGueSpan.className = "fw-normal";
-remainingGueSpan.textContent = "۱۰";
+remainingGueSpan.textContent = "10";
 remainingGue.append(remainingGueSpan);
 
 const timeLeft = document.createElement("p");
@@ -195,6 +195,7 @@ if (levelColor === 0) {
 }
 let guss = guess(colors);
 let userguess = [];
+let circleId = 0;
 colors.forEach((para) => {
   // دایره های اصلی برای حدس کاربر
   const circlebColors = document.createElement("div");
@@ -210,14 +211,19 @@ colors.forEach((para) => {
     }
     const circleColors = document.createElement("div");
     circleColors.className = "rounded-circle";
+    circleColors.id = circleId;
     circleColors.style.width = "15px";
     circleColors.style.height = "15px";
     circleColors.style.background = para;
     circleColors.addEventListener("click", (e) => {
+      const id = e.target.id;
+      const targetIndex = userguess.findIndex((item) => item.id === id);
+      userguess.splice(targetIndex, 1);
       e.target.remove();
     });
     secondSectionDiv2.append(circleColors);
-    userguess.push(para);
+    userguess.push({ id: circleId, color: para });
+    circleId++;
   });
   secondSectionDiv0.append(circlebColors);
 });
@@ -233,10 +239,18 @@ secondSectionbutton.addEventListener("click", (e) => {
   // بازنشانی مقادیر برای هر حدس جدید
   correctPosition = 0;
   correctColor = 0;
+  circleId = 0;
 
   // ایجاد یک کپی برای عدم تغییر متغیر اصلی
+  const userGuessColor = [];
+  userguess.forEach((color) => {
+    userGuessColor.push(color.color);
+  });
+  console.log(userGuessColor);
   let gussCopy = [...guss];
-  let userCopy = [...userguess];
+  let userCopy = [...userGuessColor];
+  console.log(gussCopy, "guessCopy");
+  console.log(userCopy, "userCopy");
 
   // چک دایره‌های کاملا درست (در جای درست)
   for (let i = 0; i < colorsmake; i++) {
