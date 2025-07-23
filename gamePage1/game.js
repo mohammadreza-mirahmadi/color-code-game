@@ -19,7 +19,7 @@ function timer(start, tag) {
         // پس از هر حدس، لیست حدس‌های کاربر و رنگ‌های انتخابی باید پاک شوند
         secondSectionDiv2.innerHTML = "";
         userguess = [];
-        showLoss();
+        showLost();
         stop = "stop";
         secondSectionbutton.disabled = "true";
         secondSectionDiv2.style.visibility = "hidden";
@@ -81,16 +81,37 @@ function userGuessRender(userGuess, currectColors, misplacedColors) {
   resultGuess.append(resultGuessText);
 }
 
-function showWin() {
-  const winText = document.createElement("p");
-  winText.textContent = "You won!";
-  winText.className = "text-success";
-  remainingGue.insertAdjacentElement("afterend", winText);
+async function showWin() {
+  try {
+    const winText = document.createElement("p");
+    winText.textContent = "You won!";
+    winText.className = "text-success";
+    remainingGue.insertAdjacentElement("afterend", winText);
+
+    // const userId = localStorage.getItem("userId");
+    // const res = await axios.get(
+    //   `https://68738976c75558e273547c3d.mockapi.io/users_info/${userId}`
+    // );
+    // const { data } = res;
+    // if (colorLevel === 0) {
+    //   data.score += 5;
+    // } else if (colorLevel === 1) {
+    //   data.score += 10;
+    // } else {
+    //   data.score += 15;
+    // }
+    // await axios.put(
+    //   `https://68738976c75558e273547c3d.mockapi.io/users_info/${userId}`,
+    //   data
+    // );
+  } catch (err) {
+    console.error(err);
+  }
 }
 
-function showLoss() {
+function showLost() {
   const lossText = document.createElement("p");
-  lossText.textContent = "You Loss!";
+  lossText.textContent = "You lost!";
   lossText.className = "text-danger";
   remainingGue.insertAdjacentElement("afterend", lossText);
 }
@@ -121,7 +142,7 @@ remainingGue.textContent = "Remaining Guesses: ";
 const remainingGueSpan = document.createElement("span");
 remainingGueSpan.id = "remainingGueSpan";
 remainingGueSpan.className = "fw-normal";
-remainingGueSpan.textContent = "1";
+remainingGueSpan.textContent = "10";
 remainingGue.append(remainingGueSpan);
 
 const timeLeft = document.createElement("p");
@@ -322,7 +343,7 @@ secondSectionbutton.addEventListener("click", (e) => {
   userguess = [];
 
   if (remainingGueSpan.textContent === "0") {
-    showLoss();
+    showLost();
     stop = "stop";
     e.currentTarget.disabled = "true";
     secondSectionDiv2.style.visibility = "hidden";
