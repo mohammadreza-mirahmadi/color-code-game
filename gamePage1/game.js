@@ -1,8 +1,7 @@
 const container = document.querySelector("#container");
-localStorage.setItem("difficulty", "hard");
 // ======== definding the functions ========
 let stop = null;
-function timer(start, tag) {
+function timer(start, tag, colorCode) {
   if (stop) {
     return;
   }
@@ -16,33 +15,74 @@ function timer(start, tag) {
     sec2 = Number(start[3]);
     min1 = Number(start[1]);
     min2 = Number(start[0]);
-  } else {
-    sec1 = Number(start[4]);
-    sec2 = Number(start[3]);
-    min1 = Number(start[1]);
-    min2 = Number(start[0]);
-  }
 
-  if (sec1 === 0) {
-    sec1 = 9;
-    if (sec2 === 0) {
-      sec2 = 5;
-      if (min1 === 0) {
+    if (sec1 === 0) {
+      sec1 = 9;
+      if (sec2 === 0) {
+        sec2 = 5;
+        if (min1 === 0) {
+          min1 = 9;
+          if (min2 === 0) {
+            // پس از هر حدس، لیست حدس‌های کاربر و رنگ‌های انتخابی باید پاک شوند
+            secondSectionDiv2.innerHTML = "";
+            userguess = [];
+            showLost(colorCode);
+            stop = "stop";
+            secondSectionbutton.disabled = "true";
+            secondSectionDiv2.style.visibility = "hidden";
+            return;
+          } else {
+            min2 -= 1;
+          }
+        } else {
+          min1 -= 1;
+        }
       } else {
-        min1 -= 1;
+        sec2 -= 1;
       }
     } else {
-      sec2 -= 1;
+      sec1 -= 1;
     }
+
+    if (min2 === 0 && min1 === 0 && sec2 === 1 && sec1 === 0) {
+      tag.style.color = "red";
+    }
+
+    nextTime = `${min2}${min1}:${sec2}${sec1}`;
   } else {
-    sec1 -= 1;
-  }
+    sec1 = Number(start[3]);
+    sec2 = Number(start[2]);
+    min1 = Number(start[0]);
 
-  if (min1 === 0 && sec2 === 1 && sec1 === 0) {
-    tag.style.color = "red";
-  }
+    if (sec1 === 0) {
+      sec1 = 9;
+      if (sec2 === 0) {
+        sec2 = 5;
+        if (min1 === 0) {
+          // پس از هر حدس، لیست حدس‌های کاربر و رنگ‌های انتخابی باید پاک شوند
+          secondSectionDiv2.innerHTML = "";
+          userguess = [];
+          showLost();
+          stop = "stop";
+          secondSectionbutton.disabled = "true";
+          secondSectionDiv2.style.visibility = "hidden";
+          return;
+        } else {
+          min1 -= 1;
+        }
+      } else {
+        sec2 -= 1;
+      }
+    } else {
+      sec1 -= 1;
+    }
 
-  nextTime = `${min}:${sec2}${sec1}`;
+    if (min1 === 0 && sec2 === 1 && sec1 === 0) {
+      tag.style.color = "red";
+    }
+
+    nextTime = `${min1}:${sec2}${sec1}`;
+  }
 
   tag.textContent = nextTime;
 
@@ -97,27 +137,59 @@ async function showWin() {
     //   `https://68738976c75558e273547c3d.mockapi.io/users_info/${userId}`
     // );
     // const { data } = res;
-    // if (colorLevel === 0) {
+    // if (colorLevel === "easy") {
     //   data.score += 5;
-    // } else if (colorLevel === 1) {
+    // } else if (colorLevel === "medium") {
     //   data.score += 10;
     // } else {
-    //   data.score += 15;
+    //   data.score += 20;
     // }
     // await axios.put(
     //   `https://68738976c75558e273547c3d.mockapi.io/users_info/${userId}`,
     //   data
     // );
+
+    // setTimeout(() => {
+    //   location.href = "";
+    // }, 10000);
   } catch (err) {
     console.error(err);
   }
 }
 
-function showLost() {
+function showLost(colorCode) {
   const lossText = document.createElement("p");
   lossText.textContent = "You lost!";
   lossText.className = "text-danger";
   remainingGue.insertAdjacentElement("afterend", lossText);
+
+  const lostSection = document.createElement("section");
+  lostSection.id = "lostSection";
+  lostSection.className =
+    "px-3 py-3 mt-3 rounded border border-2 d-flex align-items-center justify-content-between";
+  lostSection.style.backgroundColor = "#f0f0f0";
+  yourGuessSection.insertAdjacentElement("beforebegin", lostSection);
+
+  const lostSectionText = document.createElement("p");
+  lostSectionText.textContent = "The Color Code:";
+  lostSectionText.className = "";
+  lostSectionText.style.margin = "0";
+  lostSection.append(lostSectionText);
+
+  const lostSectionColorCode = document.createElement("div");
+  lostSectionColorCode.className =
+    "d-flex align-items-center justify-content-between";
+
+  lostSection.append(lostSectionColorCode);
+
+  colorCode.forEach((color) => {
+    const colorCodeCircle = document.createElement("div");
+    colorCodeCircle.className = "rounded-circle me-2";
+    colorCodeCircle.style.width = "1.5rem";
+    colorCodeCircle.style.height = "1.5rem";
+    colorCodeCircle.style.backgroundColor = color;
+    lostSectionColorCode.append(colorCodeCircle);
+  });
 }
 
 // ======== The firs section ========
@@ -197,7 +269,6 @@ secondSectionbutton.className = "btn btn-success btn-sm";
 let correctColor = 0;
 let correctPosition = 0;
 let levelColor = localStorage.getItem("difficulty");
-console.log(levelColor);
 let colors = [];
 let colorsmake = 6;
 let timeValue = null;
@@ -352,7 +423,7 @@ secondSectionbutton.addEventListener("click", (e) => {
   userguess = [];
 
   if (remainingGueSpan.textContent === "0") {
-    showLost();
+    showLost(guss);
     stop = "stop";
     e.currentTarget.disabled = "true";
     secondSectionDiv2.style.visibility = "hidden";
@@ -390,4 +461,4 @@ yourGuessSection.append(yourGuessList);
 
 container.append(yourGuessSection);
 
-timer(timeValue, timeLeftSpan);
+timer(timeValue, timeLeftSpan, guss);
