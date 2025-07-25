@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+    />
+    <style>
+      input.form-control.is-invalid {
+        border: 2px solid red !important;
+        box-shadow: 2px 2px 9px 6px rgba(233, 77, 93, 0.345) !important;
+      }
+
+      input:focus {
+        box-shadow: 2px 2px 9px 6px rgba(108, 242, 146, 0.537) !important;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </head>
+
+  <body style="background-color: rgba(96, 241, 137, 0.496)">
+    <main>
+      <div class="container">
+        <div
+          class="card rounded-2 mt-5 bg-light shadow container px-5"
+          style="max-width: 43rem"
+        >
+          <h1 class="text-center fw-bold mt-5 fs" style="font-size: 40px">
+            Sign Up
+          </h1>
+          <form id="form-signUp" class="mt-5 form-floating mb-2">
+            <div class="form-floating mb-5">
+              <input
+                autocomplete="off"
+                type="text"
+                class="form-control border border-success rounded"
+                id="textInput"
+                placeholder="Name"
+              />
+              <label for="textInput">Name</label>
+            </div>
+            <div class="form-floating mb-5 position-relative">
+              <input
+                autocomplete="off"
+                type="email"
+                class="form-control border border-success rounded"
+                id="floatingInput"
+                placeholder="name@example.com"
+              />
+              <label for="floatingInput">Email</label>
+            </div>
+            <div class="form-floating mb-5">
+              <input
+                autocomplete="off"
+                type="password"
+                class="form-control border border-success rounded"
+                id="floatingPassword"
+                placeholder="Password"
+              />
+              <!-- eye icon -->
+              <i
+                class="bi bi-eye-slash position-absolute icon-eye"
+                style="
+                  right: 2.3rem;
+                  top: 1rem;
+                  cursor: pointer;
+                  transform: scale(1.3);
+                "
+              ></i>
+              <!--  -->
+              <label for="floatingPassword">Password</label>
+            </div>
+            <div class="form-floating">
+              <input
+                autocomplete="off"
+                type="password"
+                class="form-control border border-success rounded"
+                id="Confirm-Password"
+                placeholder="Password"
+              />
+              <!-- eye icon -->
+              <i
+                class="bi bi-eye-slash position-absolute icon-eye"
+                style="
+                  right: 2.3rem;
+                  top: 1rem;
+                  cursor: pointer;
+                  transform: scale(1.3);
+                "
+              ></i>
+              <!-- - -->
+              <label for="Confirm-Password">Confirm Password</label>
+            </div>
+            <button
+              type="submit"
+              id="signUpBtn"
+              class="btn btn-success mt-4 w-100 p-2 fs-5"
+            >
+              Sign Up
+            </button>
+            <p class="mb-5 mt-3 fs-6" id="text">
+              Allready have an account?
+              <a href="../SignInPage/indexSi.html">Sign in</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </main>
+    <script src="./signUp.js"></script>
+  </body>
+</html>
