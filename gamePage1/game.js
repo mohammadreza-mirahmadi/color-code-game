@@ -121,7 +121,7 @@ function userGuessRender(userGuess, currectColors, misplacedColors) {
 
   const resultGuessText = document.createElement("p");
   resultGuessText.className = "";
-  resultGuessText.textContent = `Currect: ${currectColors}, Misplaced: ${misplacedColors}`;
+  resultGuessText.textContent = `Correct: ${currectColors}, Misplaced: ${misplacedColors}`;
   resultGuess.append(resultGuessText);
 }
 
@@ -132,26 +132,26 @@ async function showWin() {
     winText.className = "text-success";
     remainingGue.insertAdjacentElement("afterend", winText);
 
-    // const userId = localStorage.getItem("userId");
-    // const res = await axios.get(
-    //   `https://68738976c75558e273547c3d.mockapi.io/users_info/${userId}`
-    // );
-    // const { data } = res;
-    // if (colorLevel === "easy") {
-    //   data.score += 5;
-    // } else if (colorLevel === "medium") {
-    //   data.score += 10;
-    // } else {
-    //   data.score += 20;
-    // }
-    // await axios.put(
-    //   `https://68738976c75558e273547c3d.mockapi.io/users_info/${userId}`,
-    //   data
-    // );
+    const userId = localStorage.getItem("userId");
+    const res = await axios.get(
+      `https://68738976c75558e273547c3d.mockapi.io/users_info/${userId}`
+    );
+    const { data } = res;
+    if (colorLevel === "easy") {
+      data.score += 5;
+    } else if (colorLevel === "medium") {
+      data.score += 10;
+    } else {
+      data.score += 20;
+    }
+    await axios.put(
+      `https://68738976c75558e273547c3d.mockapi.io/users_info/${userId}`,
+      data
+    );
 
-    // setTimeout(() => {
-    //   location.href = "";
-    // }, 10000);
+    setTimeout(() => {
+      location.href = "../Home-page/Home.html";
+    }, 5000);
   } catch (err) {
     console.error(err);
   }
@@ -189,6 +189,10 @@ function showLost(colorCode) {
     colorCodeCircle.style.height = "1.5rem";
     colorCodeCircle.style.backgroundColor = color;
     lostSectionColorCode.append(colorCodeCircle);
+
+    setTimeout(() => {
+      location.href = "../Home-page/Home.html";
+    }, 5000);
   });
 }
 
@@ -370,36 +374,31 @@ secondSectionbutton.addEventListener("click", (e) => {
   userguess.forEach((color) => {
     userGuessColor.push(color.color);
   });
-  console.log(userGuessColor);
   let gussCopy = [...guss];
   let userCopy = [...userGuessColor];
-  console.log(gussCopy, "guessCopy");
-  console.log(userCopy, "userCopy");
 
   // چک دایره‌های کاملا درست (در جای درست)
   for (let i = 0; i < colorsmake; i++) {
     if (userCopy[i] === gussCopy[i]) {
       correctPosition++;
-      gussCopy[i] = null; // حذف رنگ درست از کپی
-      userCopy[i] = null; // حذف رنگ درست از حدس کاربر
+      gussCopy.splice(i, 1, "currect"); // حذف رنگ درست از کپی
+      userCopy.splice(i, 1, "currect"); // حذف رنگ درست از حدس کاربر
     }
   }
 
   // چک دایره‌هایی که رنگ درست دارند اما در موقعیت اشتباه هستند
   for (let i = 0; i < userCopy.length; i++) {
     for (let j = 0; j < gussCopy.length; j++) {
-      if (
-        userCopy[i] !== null &&
-        gussCopy[j] !== null &&
-        userCopy[i] === gussCopy[j]
-      ) {
+      if (gussCopy[j] !== "currect" && userCopy[i] === gussCopy[j]) {
         correctColor++;
-        gussCopy[j] = null; // رنگ پیدا شده از کپی حذف می‌شود
-        userCopy[i] = null; // رنگ پیدا شده از حدس کاربر حذف می‌شود
+        userCopy.splice(i, 1, "checked"); // رنگ پیدا شده از کپی حذف می‌شود
+
         break; // پس از یافتن یک رنگ درست در موقعیت اشتباه باید حلقه متوقف شود
       }
     }
   }
+  console.log(gussCopy, "guessCopy");
+  console.log(userCopy, "userCopy");
 
   remainingGueSpan.textContent = Number(remainingGueSpan.textContent) - 1;
   userGuessRender(userguess, correctPosition, correctColor);

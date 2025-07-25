@@ -104,3 +104,6 @@ async function userData() {
 
 const btn = document.querySelector("#renderTable");
 btn.addEventListener("click", userData);
+document.querySelector("#home-btn").addEventListener("click", () => {
+  location.href = "../Home-page/Home.html";
+});

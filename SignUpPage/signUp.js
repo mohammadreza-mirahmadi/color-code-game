@@ -84,6 +84,8 @@ async function handleSignUp(e) {
       window.location.href = "#";
     }, 2000);
     Ptag.insertAdjacentElement("beforeend", divAlert);
+    location.href = "../SignInPage/indexSi.html";
+
     // =========================================================
   } catch (error) {
     signUpBtn.disabled = false;
