@@ -2,7 +2,6 @@ let currentScore = null;
 let username = null;
 let difficulty = null;
 let id = localStorage.getItem("userId");
-console.log(id);
 
 window.onload = async function () {
   try {
@@ -10,7 +9,6 @@ window.onload = async function () {
       `https://68738976c75558e273547c3d.mockapi.io/users_info/${id}`
     );
     const data = await response.json();
-    console.log(data);
     username = data.name;
     currentScore = data.score;
     document.getElementById("userId").textContent = username;

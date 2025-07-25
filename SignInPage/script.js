@@ -40,7 +40,7 @@ document
       loadingMessage.classList.remove("text-danger");
       loadingMessage.classList.add("text-success");
       setTimeout(() => {
-        localStorage.setItem("userId", String(users[0].id));
+        localStorage.setItem("userId", user.id);
         location.href = "../Home-page/Home.html";
       }, 2000);
     } catch (error) {

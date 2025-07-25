@@ -137,9 +137,10 @@ async function showWin() {
       `https://68738976c75558e273547c3d.mockapi.io/users_info/${userId}`
     );
     const { data } = res;
-    if (colorLevel === "easy") {
+    const level = localStorage.getItem("difficulty");
+    if (level === "easy") {
       data.score += 5;
-    } else if (colorLevel === "medium") {
+    } else if (level === "medium") {
       data.score += 10;
     } else {
       data.score += 20;
@@ -397,8 +398,6 @@ secondSectionbutton.addEventListener("click", (e) => {
       }
     }
   }
-  console.log(gussCopy, "guessCopy");
-  console.log(userCopy, "userCopy");
 
   remainingGueSpan.textContent = Number(remainingGueSpan.textContent) - 1;
   userGuessRender(userguess, correctPosition, correctColor);

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Color Code Game</title>
-    <link rel="stylesheet" href="../Welcome/Welcome.css" />
+    <link rel="stylesheet" href="./Welcome/Welcome.css" />
   </head>
   <body>
     <div class="container">
@@ -18,11 +18,15 @@
         </button>
       </div>
       <div class="leaderboard-section">
-        <button onclick="goToPage('./Score/score.html')" class="btn">
+        <button
+          onclick="goToPage('./Score/score.html')"
+          class="btn"
+          disabled="true"
+        >
           View Leaderboard
         </button>
       </div>
     </div>
-    <script src="../Welcome/Welcome.js"></script>
+    <script src="./Welcome/Welcome.js"></script>
   </body>
 </html>

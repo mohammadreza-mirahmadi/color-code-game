@@ -47,7 +47,6 @@ async function handleSignUp(e) {
     const { data } = await axios.get(
       "https://68738976c75558e273547c3d.mockapi.io/users_info"
     );
-    console.log(data);
     const emailExist = data.some((user) => user.email === email);
     if (emailExist) {
       showError(emailInput, "This email has already been registered.");
